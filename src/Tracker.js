@@ -56,7 +56,7 @@ export default class Tracker {
 
     // type mail è reserved per le mail in sha256
     trackExternalId(type, externalid) {
-      this.sendEvent("click", type, externalid);
+      this.sendEvent("externalid", type, externalid);
     }
 
     trackSwitchId(oldid, newid) {

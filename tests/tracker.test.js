@@ -75,6 +75,16 @@ describe('Tracker class', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith(ENUMS.EVENTS_QUEUE, expect.stringContaining("click"));
   });
 
+  test('should track switchid event', () => {
+    tracker.trackSwitchId();
+    expect(localStorage.setItem).toHaveBeenCalledWith(ENUMS.EVENTS_QUEUE, expect.stringContaining("switchid"));
+  });
+
+  test('should track externalid event', () => {
+    tracker.trackExternalId();
+    expect(localStorage.setItem).toHaveBeenCalledWith(ENUMS.EVENTS_QUEUE, expect.stringContaining("externalid"));
+  });
+
   test('should track purchase event', () => {
     tracker.trackPurchase('1234', 99.99, 'USD');
     expect(localStorage.setItem).toHaveBeenCalledWith(ENUMS.EVENTS_QUEUE, expect.stringContaining("purchase"));
