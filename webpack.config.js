@@ -5,7 +5,7 @@ module.exports = (env) => {
   console.log(env.port);
   return {
     mode: 'development',
-    entry: "./src/Tracker.js",
+    entry: "./src/main.js",
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "tracker.bundle.js",

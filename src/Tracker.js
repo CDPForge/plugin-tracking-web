@@ -3,7 +3,7 @@ import ENUMS from './Enums.js';
 import SendRoutine from './SendRoutine.js';
 import DeviceID from './DeviceID.js'
 
-class Tracker {
+export default class Tracker {
     constructor(client, instance) {
       this.client = client;
       this.instance = instance;
@@ -36,40 +36,30 @@ class Tracker {
 
     send(action, ...params) {
       switch(action){
-        case "vi":
+        case "view":
           this.trackPageView();
           break;
-        case "cl":
+        case "click":
           this.trackClick(params);
           break;
-        case "ac":
+        case "purchase":
           this.trackPurchase(...params);
           break;
       }
     }
   
     trackPageView() {
-      this.sendEvent("vi");
+      this.sendEvent("view");
     }
   
-    trackClick(element, extraData = {}) {
+    trackClick(extraData = {}) {
       const eventData = {
-        text: element.innerText || null,
-        id: element.id || null,
-        className: element.className || null,
         ...extraData,
       };
-      this.sendEvent("cl", eventData);
+      this.sendEvent("click", eventData);
     }
   
     trackPurchase(productId, price, currency = "EUR") {
-      this.sendEvent("ac", { product: {productId, price, currency}});
+      this.sendEvent("purchase", { product: {productId, price, currency}});
     }
-  }
-  
-  // Esempio di utilizzo
-  window.Tracker = window.Tracker || {};
-  window.Tracker.events = window.Tracker.events || [];
-  const tracker = new Tracker(window.Tracker.client,window.Tracker.instance);
-  window.Tracker.events.forEach(evt => tracker.send(...evt));
-  window.Tracker = tracker;
+}

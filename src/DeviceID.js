@@ -10,7 +10,7 @@ export default class DeviceID {
         }
     }
 
-    validUniqueID(){
+    validUniqueID(pdid){
         return validUniqueID(pdid) && uuidVersion(pdid) === 1
     }
 
