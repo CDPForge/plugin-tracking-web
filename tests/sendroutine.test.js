@@ -11,6 +11,10 @@ global.localStorage = {
   removeItem: jest.fn(),
 };
 
+global.navigator = {
+  sendBeacon: jest.fn()
+};
+
 describe("SendRoutine", () => {
   let sendRoutine;
 
@@ -39,7 +43,7 @@ describe("SendRoutine", () => {
   test("should call flushQueue at regular intervals", () => {
     sendRoutine.start();
     jest.advanceTimersByTime(11000);
-    expect(fetch).toHaveBeenCalledWith(ENUMS.SERVER_URL, expect.any(Object));
+    expect(navigator.sendBeacon).toHaveBeenCalledWith(ENUMS.SERVER_URL, expect.any(String));
   });
 
   test("should remove events from queue after successful flush", async () => {

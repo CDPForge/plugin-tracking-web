@@ -23,18 +23,7 @@ export default class SendRoutine {
         const queue = JSON.parse(localStorage.getItem(ENUMS.EVENTS_QUEUE) || "[]");
         if (queue.length === 0) return;
 
-        try {
-            const response = await fetch(ENUMS.SERVER_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(queue),
-            });
-
-            if (response.ok) {
-                localStorage.removeItem(ENUMS.EVENTS_QUEUE);
-            }
-        } catch (error) {
-            console.error("Errore nell'invio della coda di tracking:", error);
-        }
+        navigator.sendBeacon(ENUMS.SERVER_URL, JSON.stringify(queue));
+        localStorage.removeItem(ENUMS.EVENTS_QUEUE);
     }
 }
