@@ -45,7 +45,22 @@ export default class Tracker {
         case "purchase":
           this.trackPurchase(...params);
           break;
+        case "switchid":
+          this.trackSwitchId(...params);
+          break;
+        case "externalid":
+          this.trackExternalId(...params);
+          break;  
       }
+    }
+
+    // type mail è reserved per le mail in sha256
+    trackExternalId(type, externalid) {
+      this.sendEvent("click", type, externalid);
+    }
+
+    trackSwitchId(oldid, newid) {
+      this.sendEvent("switchid", oldid, newid);
     }
   
     trackPageView() {
