@@ -40,9 +40,15 @@ describe("SendRoutine", () => {
     expect(clearInterval).toHaveBeenCalledWith(expect.any(Object));
   });
 
+  test("should call flushQueue at start", () => {
+    sendRoutine.start();
+    expect(navigator.sendBeacon).toHaveBeenCalledWith(ENUMS.SERVER_URL, expect.any(String));
+  });
+
   test("should call flushQueue at regular intervals", () => {
     sendRoutine.start();
-    jest.advanceTimersByTime(11000);
+    jest.advanceTimersByTime(ENUMS.SEND_INTERVAL + 1);
+    expect(navigator.sendBeacon).toHaveBeenCalledTimes(2);
     expect(navigator.sendBeacon).toHaveBeenCalledWith(ENUMS.SERVER_URL, expect.any(String));
   });
 

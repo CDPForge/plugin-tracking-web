@@ -1,7 +1,5 @@
 import ENUMS from './Enums.js';
 
-const SEND_INTERVAL = 10000;
-
 export default class SendRoutine {
     constructor(start = true) {
         this.interval = null;
@@ -9,9 +7,10 @@ export default class SendRoutine {
     }
 
     start() {
+        if(this.interval == null) this.flushQueue();
         this.interval = this.interval || setInterval(() => {
             this.flushQueue();
-        }, SEND_INTERVAL);
+        }, ENUMS.SEND_INTERVAL);
     }
 
     stop() {
