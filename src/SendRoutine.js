@@ -3,11 +3,11 @@ import ENUMS from './Enums.js';
 export default class SendRoutine {
     constructor(start = true) {
         this.interval = null;
-        if(start) this.start();
+        if (start) this.start();
     }
 
     start() {
-        if(this.interval == null) this.flushQueue();
+        if (this.interval == null) this.flushQueue();
         this.interval = this.interval || setInterval(() => {
             this.flushQueue();
         }, ENUMS.SEND_INTERVAL);
@@ -21,8 +21,19 @@ export default class SendRoutine {
     async flushQueue() {
         const queue = JSON.parse(localStorage.getItem(ENUMS.EVENTS_QUEUE) || "[]");
         if (queue.length === 0) return;
-
-        navigator.sendBeacon(ENUMS.SERVER_URL, JSON.stringify(queue));
         localStorage.removeItem(ENUMS.EVENTS_QUEUE);
+
+        fetch(ENUMS.SERVER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ events: queue }),
+            keepalive: true
+        }).catch(error => {
+            console.error("Error sending events:", error);
+            const newQueue = JSON.parse(localStorage.getItem(ENUMS.EVENTS_QUEUE) || "[]");
+            localStorage.setItem(ENUMS.EVENTS_QUEUE, JSON.stringify(queue.concat(newQueue)));
+        });
     }
 }
