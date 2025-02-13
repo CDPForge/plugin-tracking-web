@@ -5,10 +5,10 @@ module.exports = (env) => {
   console.log(env.port);
   return {
     mode: 'development',
-    entry: "./src/main.js",
+    entry: "./main.ts",
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "tracker.bundle.js",
+      filename: "bundle.js",
       clean: true,
     },
     devServer: {
@@ -26,6 +26,18 @@ module.exports = (env) => {
     ],
     module: {
       rules: [
+        {
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true // Opzionale: velocizza la compilazione in development
+              }
+            }
+          ],
+          exclude: /node_modules/,
+        },
         {
           test: /\.js$/,
           exclude: /node_modules|Worker\.js/,
@@ -45,6 +57,11 @@ module.exports = (env) => {
           use: ['html-loader'], // Aggiungi questo per gestire i file HTML
         }
       ],
-    }
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+      modules: [path.resolve(__dirname, 'src'), 'node_modules']
+    },
+    devtool: 'source-map' // Aggiunto per migliore debugging
   };
 };

@@ -39,7 +39,7 @@ describe("DeviceID", () => {
 
         new DeviceID();
 
-        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.BROWSER_ID, "valid-uuid");
+        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.LS_BROWSER_ID, "valid-uuid");
     });
 
     test("should not store an invalid UUID from URL param", () => {
@@ -61,7 +61,7 @@ describe("DeviceID", () => {
 
     test("should return existing device ID from localStorage", () => {
         localStorageMock.getItem.mockImplementation((key) => {
-            if (key === ENUMS.BROWSER_ID) return "stored-uuid";
+            if (key === ENUMS.LS_BROWSER_ID) return "stored-uuid";
             return null;
         });
 
@@ -76,6 +76,6 @@ describe("DeviceID", () => {
         const deviceID = new DeviceID().getDeviceID();
 
         expect(deviceID).toBe("mocked-uuid-v1");
-        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.DOMAIN_ID, "mocked-uuid-v1");
+        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.LS_DOMAIN_ID, "mocked-uuid-v1");
     });
 });
