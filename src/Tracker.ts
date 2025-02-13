@@ -94,7 +94,7 @@ export default class Tracker {
     this.sendEvent("view");
   }
 
-  public trackClick(target: string): void {
+  public trackClick(target: string | null): void {
     if (target == null) {
       console.warn("Target is null, click event skipped !");
       return;

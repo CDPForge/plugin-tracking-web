@@ -17,7 +17,7 @@
     "rootDir": ".",
     "baseUrl": ".",
     "moduleResolution": "node",
-    "types": []
+    "types": ["jest","node"]
   },
   "include": [
     "src/**/*",

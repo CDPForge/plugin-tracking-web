@@ -2,7 +2,7 @@ import Config from './Config';
 import { Event, ExtendedRequestInit } from './types';
 
 export default class SendRoutine {
-  private interval: undefined | number;
+  private interval: undefined | number | NodeJS.Timeout;
 
   constructor(start: boolean = true) {
     this.interval = undefined;
