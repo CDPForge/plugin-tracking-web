@@ -7,12 +7,14 @@
 </head>
 <body>
   <script>
+    window.abdGdprConsent = {status:"granted"};
     window.Tracker={events:[],send:function(...e){this.events.push([...e])}};
-    window.Tracker.client = 1;
-    window.Tracker.instance = 1;
-    window.Tracker.send("vi");
+    window.Tracker.client = 100;
+    window.Tracker.instance = 100;
+    window.Tracker.send("view");
   </script>
   <h1>Hello, world!</h1>
-  <button onclick="window.Tracker.send('cl')">Press me</button>
+  <button onclick="window.Tracker.send('click', 'btnPressMe')">Press me</button>
+  <button onclick="window.Tracker.send('purchase', 'orderId', [{id:'product1', price:100.25, quantity:2, currency:'EUR'},{id:'product2', price:74.25, quantity:1, currency:'EUR'}])">Purchase</button>
 </body>
 </html>

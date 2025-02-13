@@ -1,4 +1,4 @@
-import ENUMS from './Enums.js';
+import Config from './Config.js';
 
 export default class SendRoutine {
     constructor(start = true) {
@@ -10,7 +10,7 @@ export default class SendRoutine {
         if (this.interval == null) this.flushQueue();
         this.interval = this.interval || setInterval(() => {
             this.flushQueue();
-        }, ENUMS.SEND_INTERVAL);
+        }, Config.SEND_INTERVAL);
     }
 
     stop() {
@@ -18,12 +18,24 @@ export default class SendRoutine {
         this.interval = null;
     }
 
-    async flushQueue() {
-        const queue = JSON.parse(localStorage.getItem(ENUMS.EVENTS_QUEUE) || "[]");
-        if (queue.length === 0) return;
-        localStorage.removeItem(ENUMS.EVENTS_QUEUE);
+    sendTopics(ctx) {
+        return fetch(Config.SERVER_URL + "/browsingTopics", {
+            browsingTopics: true,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ctx),
+            keepalive: true
+        });
+    }
 
-        fetch(ENUMS.SERVER_URL, {
+    async flushQueue() {
+        const queue = JSON.parse(localStorage.getItem(Config.EVENTS_QUEUE) || "[]");
+        if (queue.length === 0) return;
+        localStorage.removeItem(Config.EVENTS_QUEUE);
+
+        fetch(Config.SERVER_URL + "/events", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,8 +44,8 @@ export default class SendRoutine {
             keepalive: true
         }).catch(error => {
             console.error("Error sending events:", error);
-            const newQueue = JSON.parse(localStorage.getItem(ENUMS.EVENTS_QUEUE) || "[]");
-            localStorage.setItem(ENUMS.EVENTS_QUEUE, JSON.stringify(queue.concat(newQueue)));
+            const newQueue = JSON.parse(localStorage.getItem(Config.EVENTS_QUEUE) || "[]");
+            localStorage.setItem(Config.EVENTS_QUEUE, JSON.stringify(queue.concat(newQueue)));
         });
     }
 }

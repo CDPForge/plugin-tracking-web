@@ -1,5 +1,5 @@
-import DeviceID from "../src/DeviceID.js";
-import ENUMS from "../src/Enums.js";
+import DeviceID from "../src/Device.js";
+import ENUMS from "../src/Config.js";
 import { v1 as generateUniqueID } from "uuid";
 
 jest.mock("uuid", () => ({
@@ -34,16 +34,16 @@ describe("DeviceID", () => {
     });
 
     test("should store a valid UUID from URL param if not already in localStorage", () => {
-        window.location.search = `?${ENUMS.PARAM_DID}=valid-uuid`;
+        window.location.search = `?${ENUMS.QUERY_PARAM_BROWSER_ID}=valid-uuid`;
         localStorageMock.getItem.mockReturnValue(null);
 
         new DeviceID();
 
-        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.DEVICE_ID, "valid-uuid");
+        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.BROWSER_ID, "valid-uuid");
     });
 
     test("should not store an invalid UUID from URL param", () => {
-        window.location.search = `?${ENUMS.PARAM_DID}=invalid-uuid`;
+        window.location.search = `?${ENUMS.QUERY_PARAM_BROWSER_ID}=invalid-uuid`;
         localStorageMock.getItem.mockReturnValue(null);
 
         new DeviceID();
@@ -61,7 +61,7 @@ describe("DeviceID", () => {
 
     test("should return existing device ID from localStorage", () => {
         localStorageMock.getItem.mockImplementation((key) => {
-            if (key === ENUMS.DEVICE_ID) return "stored-uuid";
+            if (key === ENUMS.BROWSER_ID) return "stored-uuid";
             return null;
         });
 
@@ -76,6 +76,6 @@ describe("DeviceID", () => {
         const deviceID = new DeviceID().getDeviceID();
 
         expect(deviceID).toBe("mocked-uuid-v1");
-        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.TMP_DID, "mocked-uuid-v1");
+        expect(localStorageMock.setItem).toHaveBeenCalledWith(ENUMS.DOMAIN_ID, "mocked-uuid-v1");
     });
 });
