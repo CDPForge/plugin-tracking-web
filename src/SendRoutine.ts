@@ -53,7 +53,7 @@ export default class SendRoutine {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(event),
+      body: JSON.stringify({ events: [event] }),
       keepalive: true
     };
 
