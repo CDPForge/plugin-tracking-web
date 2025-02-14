@@ -35,6 +35,7 @@ describe('SendRoutine Tests', () => {
       referrer: undefined,
       timestamp: new Date().toISOString(),
       did: 'test-did',
+      gdpr: undefined,
       session: 'test-session'
     };
 
@@ -68,7 +69,8 @@ describe('SendRoutine Tests', () => {
       referrer: undefined,
       timestamp: new Date().toISOString(),
       did: 'test-did',
-      session: 'test-session'
+      session: 'test-session',
+      gdpr: undefined
     };
 
     await sendRoutine.sendTopics(mockContext);
@@ -96,7 +98,8 @@ describe('SendRoutine Tests', () => {
       referrer: undefined,
       timestamp: new Date().toISOString(),
       did: 'test-did',
-      session: 'test-session'
+      session: 'test-session',
+      gdpr: undefined
     };
 
     mockFetch.mockRejectedValueOnce(new Error('Network error'));

@@ -29,6 +29,7 @@ export interface Event {
   timestamp: string;
   did: string;
   session: string;
+  gdpr: string | undefined;
   [key: string]: any;
 }
 

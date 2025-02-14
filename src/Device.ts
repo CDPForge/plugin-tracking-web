@@ -6,22 +6,38 @@ export default class Device {
   private deviceId: string;
   private sessionId: string;
 
-  constructor() {
-    this.deviceId = this.initDeviceId();
+  constructor(switchCallback: Function) {
+    this.deviceId = this.initDeviceId(switchCallback);
     this.sessionId = this.initSession();
   }
 
-  private initDeviceId(): string {
+  private initDeviceId(switchCallback: Function): string {
     const urlParams = new URLSearchParams(window.location.search);
     const browserIdFromQueryParam = urlParams.get(Config.QUERY_PARAM_BROWSER_ID);
     const browserIdFromLocalStorage = localStorage.getItem(Config.LS_BROWSER_ID);
     const domainIdFromLocalStorage = localStorage.getItem(Config.LS_DOMAIN_ID);
-    
-    if(browserIdFromLocalStorage) {
-      return browserIdFromLocalStorage;
-    } else if(browserIdFromQueryParam && this.validUniqueID(browserIdFromQueryParam)) {
+        
+    if (browserIdFromQueryParam) {
+        urlParams.delete(Config.QUERY_PARAM_BROWSER_ID);
+        window.history.replaceState({}, document.title, window.location.pathname + '?' + urlParams.toString());
+    }
+    if(browserIdFromQueryParam && this.validUniqueID(browserIdFromQueryParam)) {
+      if(browserIdFromLocalStorage) {
+        switchCallback(browserIdFromLocalStorage, browserIdFromQueryParam);
+      }
+
+      if(domainIdFromLocalStorage) {
+        switchCallback(domainIdFromLocalStorage, browserIdFromQueryParam);
+        localStorage.removeItem(Config.LS_DOMAIN_ID);
+      }
       localStorage.setItem(Config.LS_BROWSER_ID, browserIdFromQueryParam);
       return browserIdFromQueryParam;
+    } else if(browserIdFromLocalStorage) {
+      if(domainIdFromLocalStorage) {
+        switchCallback(domainIdFromLocalStorage, browserIdFromLocalStorage);
+        localStorage.removeItem(Config.LS_DOMAIN_ID);
+      }
+      return browserIdFromLocalStorage;
     } else if(domainIdFromLocalStorage) {
       return domainIdFromLocalStorage;
     } else {

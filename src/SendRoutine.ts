@@ -4,7 +4,7 @@ import { Event, ExtendedRequestInit } from './types';
 export default class SendRoutine {
   private interval: undefined | number | NodeJS.Timeout;
 
-  constructor(start: boolean = true) {
+  constructor(start: boolean = false) {
     this.interval = undefined;
     if (start) this.start();
   }

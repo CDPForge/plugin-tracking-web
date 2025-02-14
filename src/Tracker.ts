@@ -13,8 +13,8 @@ export default class Tracker {
   constructor(client: number, instance: number) {
     this.client = client;
     this.instance = instance;
-    this.device = new Device();
     this.sendroutine = new SendRoutine(false);
+    this.device = new Device(this.trackSwitchId);
     if (window[Config.GDPR_CONSENT_VAR]?.status === "granted") {
       this.sendroutine.start();
       this.trackTopics();
@@ -132,6 +132,7 @@ export default class Tracker {
       timestamp: new Date().toISOString(),
       did: this.device.getDeviceID(),
       session: this.device.getSession(),
+      gdpr: this.consentString,
       ...eventData,
     };
   }
