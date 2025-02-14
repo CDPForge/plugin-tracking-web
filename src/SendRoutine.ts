@@ -46,17 +46,17 @@ export default class SendRoutine {
     });
   }
 
-  public async sendTopics(context: Event): Promise<Response> {
+  public async sendTopics(event: Event): Promise<Response> {
     const options: ExtendedRequestInit = {
       browsingTopics: true,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(context),
+      body: JSON.stringify(event),
       keepalive: true
     };
 
-    return fetch(Config.SERVER_URL + "/browsingTopics", options);
+    return fetch(Config.SERVER_URL + "/events", options);
   }
 } 

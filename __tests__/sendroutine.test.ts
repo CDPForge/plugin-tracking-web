@@ -76,7 +76,7 @@ describe('SendRoutine Tests', () => {
     await sendRoutine.sendTopics(mockContext);
 
     expect(mockFetch).toHaveBeenCalledWith(
-      Config.SERVER_URL + "/browsingTopics",
+      Config.SERVER_URL + "/events",
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify(mockContext),
