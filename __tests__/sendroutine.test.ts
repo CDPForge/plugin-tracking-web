@@ -79,7 +79,7 @@ describe('SendRoutine Tests', () => {
       Config.SERVER_URL + "/events",
       expect.objectContaining({
         method: 'POST',
-        body: JSON.stringify(mockContext),
+        body: JSON.stringify({events: [mockContext]}),
         browsingTopics: true
       })
     );
