@@ -64,9 +64,6 @@ export default class Tracker {
       case "purchase":
         this.trackPurchase(params[0], params[1]);
         break;
-      case "switchid":
-        this.trackSwitchId(params[0], params[1]);
-        break;
       case "externalid":
         this.trackExternalId(params[0], params[1]);
         break;
@@ -86,7 +83,7 @@ export default class Tracker {
     this.sendEvent("externalid", { type, externalId });
   }
 
-  public trackSwitchId(oldId: string, newId: string): void {
+  private trackSwitchId(oldId: string, newId: string): void {
     this.sendEvent("switchid", { oldId, newId });
   }
 
