@@ -45,10 +45,11 @@ describe('Tracker Tests', () => {
 
   test('should enqueue purchase event', () => {
     const orderId = 'order123';
-    const products = [{
+    const products: Product[] = [{
       id: 'prod1',
       price: 10,
-      quantity: 1
+      quantity: 1,
+      currency: "EUR"
     }];
     
     tracker.trackPurchase(orderId, products);

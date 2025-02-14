@@ -79,8 +79,8 @@ export default class Tracker {
     sessionStorage.setItem(Config.LS_TOPICS_SENT_FLAG, Date.now().toString());
   }
 
-  public trackExternalId(type: string, externalId: string): void {
-    this.sendEvent("externalid", { type, externalId });
+  public trackExternalId(ExternalIdtype: string, externalId: string): void {
+    this.sendEvent("externalid", { ExternalIdtype, externalId });
   }
 
   private trackSwitchId(oldId: string, newId: string): void {
@@ -100,7 +100,7 @@ export default class Tracker {
   }
 
   public trackPurchase(orderId: string, products: Product | Product[]): void {
-    const productsArray = Array.isArray(products) ? products : [products];
+    const productsArray: Product[] = Array.isArray(products) ? products : [products];
     const hasInvalidProducts = productsArray.some(product => {
       if (product.id == null || product.price == null || product.quantity == null) {
         console.warn("Product is missing required fields, purchase event skipped !");

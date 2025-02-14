@@ -13,7 +13,7 @@ export interface Product {
   brand?: string;
   category?: string;
   quantity: number;
-  currency?: string;
+  currency: string;
 }
 
 export interface Event {
@@ -22,15 +22,21 @@ export interface Event {
   event: string;
   href: string;
   pageTitle: string;
-  pageDescription: string | undefined;
-  pageImage: string | undefined;
-  pageType: string | undefined;
-  referrer: string | undefined;
+  pageDescription?: string;
+  pageImage?: string;
+  pageType?: string;
+  referrer?: string;
   timestamp: string;
   did: string;
   session: string;
-  gdpr: string | undefined;
-  [key: string]: any;
+  gdpr?: string;
+  order?: string;
+  products?: Product[];
+  target?: string;
+  oldId?: string;
+  newId?: string;
+  ExternalIdtype?: string;
+  ExternalId?: string;
 }
 
 export interface ExtendedRequestInit extends RequestInit {
