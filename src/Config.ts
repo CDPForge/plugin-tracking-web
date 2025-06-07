@@ -7,5 +7,5 @@ export default class Config {
   static readonly SEND_INTERVAL: number = 10000;
   static readonly LS_SESSION_ID: string = 'sid';
   static readonly LS_TOPICS_SENT_FLAG: string = 'topicsSent';
-  static readonly GDPR_CONSENT_VAR: string = "abdGdprConsent";
+  static readonly GDPR_CONSENT_VAR: string = "cdpfGdprConsent";
 } 
