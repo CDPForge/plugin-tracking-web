@@ -172,8 +172,3 @@ This creates a mutual value exchange:
 By contributing to the network (i.e., allowing your site's Topics to be observed), you also receive insights driven by global user behavior across all participating properties.
 
 🔄 It's a win-win model: each site contributes its visibility and gains from the collective intelligence of the network — enabling more effective and privacy-compliant interest-based targeting via Topics.
-
-
-## License
-
-MIT
