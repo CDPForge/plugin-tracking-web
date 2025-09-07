@@ -36,17 +36,28 @@ export default class SendRoutine {
   }
 
   private async sendEvents(events: Event[]): Promise<Response> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), Config.SEND_INTERVAL);
+
     return fetch(Config.SERVER_URL + "/events", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ events: events }),
-      keepalive: true
+      keepalive: true,
+      mode: 'cors',
+      signal: controller.signal
+    }).then(res => {
+      clearTimeout(timeoutId)
+      return res;
     });
   }
 
   public async sendTopics(event: Event): Promise<Response> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), Config.SEND_INTERVAL);
+
     const options: ExtendedRequestInit = {
       browsingTopics: true,
       method: 'POST',
@@ -54,9 +65,14 @@ export default class SendRoutine {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ events: [event] }),
-      keepalive: true
+      keepalive: true,
+      mode: 'cors',
+      signal: controller.signal
     };
 
-    return fetch(Config.SERVER_URL + "/events", options);
+    return fetch(Config.SERVER_URL + "/events", options).then(res => {
+      clearTimeout(timeoutId)
+      return res;
+    });
   }
-} 
+}

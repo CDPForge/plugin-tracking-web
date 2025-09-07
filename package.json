@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc && webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "start": "webpack serve --mode development --env port=8080",
+    "start": "webpack serve --mode development --env port=8081",
     "type-check": "tsc --noEmit",
     "type-check:watch": "tsc --noEmit --watch",
     "test": "jest",
