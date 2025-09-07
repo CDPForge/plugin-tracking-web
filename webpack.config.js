@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (env) => {
   console.log(env.port);
@@ -8,7 +7,7 @@ module.exports = (env) => {
     entry: "./main.ts",
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "bundle.js",
+      filename: "cdpforge.js",
       clean: true,
     },
     devServer: {
@@ -18,12 +17,7 @@ module.exports = (env) => {
       host: env.host,
       open: true,
     },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: "./index.html",
-        filename: "index.html",
-      }),
-    ],
+    plugins: [],
     module: {
       rules: [
         {
